@@ -94,7 +94,7 @@ class ListItemMonitor(threading.Thread):
 
             # media window is opened or widgetcontainer set - start listitem monitoring!
             elif getCondVisibility("Window.IsMedia | "
-                                        "!IsEmpty(Window(Home).Property(SkinHelper.WidgetContainer))"):
+                                        "!String.IsEmpty(Window(Home).Property(SkinHelper.WidgetContainer))"):
                 self.monitor_listitem()
                 self.kodimonitor.waitForAbort(0.15)
                 self.delayed_task_interval += 0.15
@@ -601,7 +601,7 @@ class ListItemMonitor(threading.Thread):
         if self.enable_forcedviews:
             cur_forced_view = xbmc.getInfoLabel("Skin.String(SkinHelper.ForcedViews.%s)" % content_type)
             if getCondVisibility(
-                    "Control.IsVisible(%s) | IsEmpty(Container.Viewmode) | System.HasModalDialog | System.HasVisibleModalDialog" % cur_forced_view):
+                    "Control.IsVisible(%s) | String.IsEmpty(Container.Viewmode) | System.HasModalDialog | System.HasVisibleModalDialog" % cur_forced_view):
                 # skip if the view is already visible or if we're not in an actual media window
                 return
             if (content_type and cur_forced_view and cur_forced_view != "None" and not
